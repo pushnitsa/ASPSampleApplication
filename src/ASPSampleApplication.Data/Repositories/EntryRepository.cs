@@ -7,7 +7,7 @@ namespace ASPSampleApplication.Data.Repositories
     {
         private readonly DbContext _dbContext;
 
-        public EntryRepository(DbContext dbContext)
+        public EntryRepository(EntryDbContext dbContext)
         {
             _dbContext = dbContext;
             UnitOfWork = new DbContextUnitOfWork(dbContext);
