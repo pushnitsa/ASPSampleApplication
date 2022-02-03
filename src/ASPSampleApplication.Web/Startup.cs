@@ -1,4 +1,7 @@
 ﻿using ASPSampleApplication.Data.Repositories;
+using ASPSampleApplication.Web.Auth;
+using ASPSampleApplication.Web.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -21,6 +24,31 @@ namespace ASPSampleApplication.Web
             });
 
             services.AddMvc();
+
+            services
+                .AddAuthentication(options => { options.DefaultChallengeScheme = SampleAuthOptions.DefaultSchemeName; })
+                .AddScheme<SampleAuthOptions, SampleTokenAuthHandler>(SampleAuthOptions.DefaultSchemeName, options => { });
+
+            var authOptions = Configuration.GetSection("Auth").Get<AuthOptions>();
+
+            services.AddAuthorization(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder(SampleAuthOptions.DefaultSchemeName)
+                    .RequireAssertion(c =>
+                    {
+                        if (c.Resource is HttpContext httpContext && httpContext.Request.Headers.ContainsKey(authOptions.HeaderName))
+                        {
+                            var authHeaderValue = httpContext.Request.Headers[authOptions.HeaderName];
+
+                            return authOptions.Token == authHeaderValue;
+                        }
+
+                        return false;
+                    })
+                    .Build();
+
+                options.DefaultPolicy = policy;
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -46,6 +74,7 @@ namespace ASPSampleApplication.Web
 
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseSwagger();
 
