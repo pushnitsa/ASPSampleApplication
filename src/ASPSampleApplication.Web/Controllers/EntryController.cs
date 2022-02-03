@@ -34,7 +34,7 @@ namespace ASPSampleApplication.Web.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("search")]
         public IActionResult Search()
         {
             return View();

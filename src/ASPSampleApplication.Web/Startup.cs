@@ -1,5 +1,6 @@
 ﻿using ASPSampleApplication.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace ASPSampleApplication.Web
 {
@@ -17,6 +18,13 @@ namespace ASPSampleApplication.Web
             services.AddDbContext<EntryDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("EntryConnectionString"));
+            });
+
+            services.AddMvc();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sample API", Version = "v1" });
             });
 
             services.AddRazorPages();
@@ -39,11 +47,18 @@ namespace ASPSampleApplication.Web
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthorization();
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("v1/swagger.json", "Sample API");
+            });
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
+                endpoints.MapSwagger();
             });
         }
     }
