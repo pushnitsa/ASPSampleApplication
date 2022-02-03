@@ -1,4 +1,7 @@
-﻿namespace ASPSampleApplication.Web
+﻿using ASPSampleApplication.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
+
+namespace ASPSampleApplication.Web
 {
     public class Startup
     {
@@ -11,6 +14,11 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<EntryDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("EntryConnectionString"));
+            });
+
             services.AddRazorPages();
         }
 
@@ -19,6 +27,13 @@
             if (!env.IsDevelopment())
             {
                 app.UseExceptionHandler("/Error");
+            }
+
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var dbContext = serviceScope.ServiceProvider.GetRequiredService<EntryDbContext>();
+
+                dbContext.Database.Migrate();
             }
 
             app.UseStaticFiles();

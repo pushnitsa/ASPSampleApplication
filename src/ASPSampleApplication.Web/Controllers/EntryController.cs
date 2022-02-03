@@ -5,6 +5,11 @@ namespace ASPSampleApplication.Web.Controllers
     [Route("api/entry")]
     public class EntryController : Controller
     {
+        public EntryController()
+        {
+
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
