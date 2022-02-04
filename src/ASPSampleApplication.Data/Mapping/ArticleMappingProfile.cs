@@ -10,6 +10,7 @@ namespace ASPSampleApplication.Data.Mapping
         {
             CreateMap<Article, ArticleEntity>()
                 // Do not need to map these properties
+                // cause it autogenerating
                 .ForMember(x => x.CreatedDate, y => y.Ignore())
                 .ForMember(x => x.ModifiedDate, y => y.Ignore())
                 .ForMember(x => x.Id, y => y.Ignore())
