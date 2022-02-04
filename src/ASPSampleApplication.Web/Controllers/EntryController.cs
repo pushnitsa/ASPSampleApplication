@@ -1,5 +1,6 @@
 ﻿using ASPSampleApplication.Core.Models;
 using ASPSampleApplication.Core.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASPSampleApplication.Web.Controllers
@@ -24,6 +25,7 @@ namespace ASPSampleApplication.Web.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Article article)
         {
@@ -32,6 +34,7 @@ namespace ASPSampleApplication.Web.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] Article article)
         {
@@ -40,6 +43,7 @@ namespace ASPSampleApplication.Web.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
