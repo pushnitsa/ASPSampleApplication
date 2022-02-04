@@ -1,5 +1,8 @@
-﻿using ASPSampleApplication.Data.Extensions;
+﻿using ASPSampleApplication.Core.Services;
+using ASPSampleApplication.Data.Extensions;
+using ASPSampleApplication.Data.Mapping;
 using ASPSampleApplication.Data.Repositories;
+using ASPSampleApplication.Data.Services;
 using ASPSampleApplication.Web.Auth;
 using ASPSampleApplication.Web.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -57,6 +60,11 @@ namespace ASPSampleApplication.Web
             });
 
             services.AddRazorPages();
+            services.AddAutoMapper(typeof(ArticleMappingProfile));
+
+            services.AddTransient<IArticleService, ArticleService>();
+            services.AddTransient<IEntryRepository, EntryRepository>();
+            services.AddTransient<Func<IEntryRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetService<IEntryRepository>());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
