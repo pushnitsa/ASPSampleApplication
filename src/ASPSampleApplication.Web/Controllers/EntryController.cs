@@ -8,10 +8,12 @@ namespace ASPSampleApplication.Web.Controllers
     public class EntryController : Controller
     {
         private readonly IArticleService _articleService;
+        private readonly IArticleSearchService _articleSearchService;
 
-        public EntryController(IArticleService articleService)
+        public EntryController(IArticleService articleService, IArticleSearchService articleSearchService)
         {
             _articleService = articleService;
+            _articleSearchService = articleSearchService;
         }
 
         [HttpGet("{id}")]
@@ -47,9 +49,11 @@ namespace ASPSampleApplication.Web.Controllers
         }
 
         [HttpPost("search")]
-        public IActionResult Search()
+        public async Task<ArticleSearchResult> Search([FromBody] ArticleSearchCriteria searchCriteria)
         {
-            return View();
+            var result = await _articleSearchService.SearchAsync(searchCriteria);
+
+            return result;
         }
     }
 }

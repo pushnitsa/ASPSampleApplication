@@ -63,6 +63,7 @@ namespace ASPSampleApplication.Web
             services.AddAutoMapper(typeof(ArticleMappingProfile));
 
             services.AddTransient<IArticleService, ArticleService>();
+            services.AddTransient<IArticleSearchService, ArticleSearchService>();
             services.AddTransient<IEntryRepository, EntryRepository>();
             services.AddTransient<Func<IEntryRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetService<IEntryRepository>());
         }
