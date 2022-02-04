@@ -1,6 +1,6 @@
 ﻿using ASPSampleApplication.Data.Repositories;
 using ASPSampleApplication.Web.Auth;
-using ASPSampleApplication.Web.Model;
+using ASPSampleApplication.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -68,7 +68,7 @@ namespace ASPSampleApplication.Web
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<EntryDbContext>();
-
+                dbContext.Database.EnsureCreated();
                 dbContext.Database.Migrate();
             }
 

@@ -1,4 +1,4 @@
-﻿namespace ASPSampleApplication.Web.Model
+﻿namespace ASPSampleApplication.Web.Models
 {
     public class AuthOptions
     {
