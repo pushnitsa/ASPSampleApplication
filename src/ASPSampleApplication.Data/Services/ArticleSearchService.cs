@@ -1,7 +1,10 @@
 ﻿using ASPSampleApplication.Core.Models;
 using ASPSampleApplication.Core.Services;
+using ASPSampleApplication.Data.Models;
 using ASPSampleApplication.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Immutable;
+using System.Linq.Dynamic.Core;
 
 namespace ASPSampleApplication.Data.Services
 {
@@ -18,17 +21,39 @@ namespace ASPSampleApplication.Data.Services
 
         public async Task<ArticleSearchResult> SearchAsync(ArticleSearchCriteria searchCriteria)
         {
+            var result = new ArticleSearchResult();
+
+            if (searchCriteria is null)
+            {
+                return result;
+            }
+
             await using var entryRespository = _repositoryFactory();
 
-            var articleIds = await entryRespository.Articles.Skip(searchCriteria.Skip).Take(searchCriteria.Take).Select(x => x.Id).ToListAsync();
+            var query = entryRespository.Articles;
 
-            var result = new ArticleSearchResult
-            {
-                Results = await _articleService.GetAsync(articleIds),
-                TotalCount = await entryRespository.Articles.CountAsync(),
-            };
+            query = BuildSorting(query, searchCriteria.Sorting);
+
+            var articleIds = await query
+                .Skip(searchCriteria.Skip)
+                .Take(searchCriteria.Take)
+                .Select(x => x.Id)
+                .ToListAsync();
+
+            result.Results = (await _articleService.GetAsync(articleIds)).OrderBy(x => Array.IndexOf(articleIds.ToArray(), x.Id)).ToImmutableList();
+            result.TotalCount = await entryRespository.Articles.CountAsync();
 
             return result;
+        }
+
+        protected virtual IQueryable<ArticleEntity> BuildSorting(IQueryable<ArticleEntity> query, string? sorting)
+        {
+            if (!string.IsNullOrEmpty(sorting))
+            {
+                query = query.OrderBy(sorting);
+            }
+
+            return query;
         }
     }
 }
