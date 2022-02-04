@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ASPSampleApplication.Data.Repositories
 {
-    public class EntryRepository : IRepository
+    public class Repository : IRepository
     {
         private readonly DbContext _dbContext;
 
-        public EntryRepository(EntryDbContext dbContext)
+        public Repository(DbContext dbContext)
         {
             _dbContext = dbContext;
             UnitOfWork = new DbContextUnitOfWork(dbContext);
@@ -32,11 +32,11 @@ namespace ASPSampleApplication.Data.Repositories
 
         public async ValueTask DisposeAsync()
         {
-            await Dispose(true);
+            await DisposeAsync(true);
             GC.SuppressFinalize(this);
         }
 
-        protected virtual ValueTask Dispose(bool disposing)
+        protected virtual ValueTask DisposeAsync(bool disposing)
         {
             return _dbContext.DisposeAsync();
         }
