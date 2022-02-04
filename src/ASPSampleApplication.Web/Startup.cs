@@ -1,4 +1,5 @@
-﻿using ASPSampleApplication.Data.Repositories;
+﻿using ASPSampleApplication.Data.Extensions;
+using ASPSampleApplication.Data.Repositories;
 using ASPSampleApplication.Web.Auth;
 using ASPSampleApplication.Web.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -77,6 +78,8 @@ namespace ASPSampleApplication.Web
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSwagger();
+
+            app.UseDbTriggers();
 
             app.UseSwaggerUI(c =>
             {
