@@ -8,6 +8,7 @@ ASP.NET sample project with sample CRUD API protected by simple token.
 * [Factory](https://github.com/pushnitsa/ASPSampleApplication/blob/main/src/ASPSampleApplication.Web/Startup.cs#L80)
 * Swagger
 * Automapper
+* [Dynamic LINQ](https://dynamic-linq.net/) (advanced sorting scenario)
 * Docker
 * Docker compose
 * xUnit
@@ -46,8 +47,10 @@ Swagger UI
 ![Swagger](docs/images/swagger.png)
 
 ### Searching
-Basic scenario of search wasn't implemented.
+Basic search scenario wasn't implemented.
 However, there is an opportunity to take entries by paging, with sorting expressions.
+
+Note: There are no any validation for sorting expressions. An exception could happen if dab data would be found.
 
 ![Sorting, paging](docs/images/sorting_paging.png)
 
@@ -76,8 +79,12 @@ Becomes
 ![Swagger docs](docs/images/swagger_doc.png)
 
 ## XML view
-![XML view](docs/images/xml.png)
+You could get an XML response view. Relying to request headers.
 
+![XML view](docs/images/xml.png)
 
 ## Configuring
 Connection string and auth credentials as well, could be configured via environment variables.
+
+## Unit tests
+Just one test was added. Only for demo purposes.
