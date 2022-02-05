@@ -17,6 +17,12 @@ namespace ASPSampleApplication.Web.Controllers
             _articleSearchService = articleSearchService;
         }
 
+        /// <summary>
+        /// Returns the requested article by Id.
+        /// Allows anonymous access
+        /// </summary>
+        /// <param name="id">An article id</param>
+        /// <returns><see cref="Article"/>Article object</returns>
         [HttpGet("{id}")]
         public async Task<Article> Index(string id)
         {
@@ -25,6 +31,12 @@ namespace ASPSampleApplication.Web.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Add particular article.
+        /// Authorization is required.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Article article)
@@ -34,6 +46,12 @@ namespace ASPSampleApplication.Web.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Updating the article.
+        /// Authorization is required.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] Article article)
@@ -43,6 +61,12 @@ namespace ASPSampleApplication.Web.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Deleting the article by id.
+        /// Authorization is required.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
@@ -52,6 +76,12 @@ namespace ASPSampleApplication.Web.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Represents the paging search ability.
+        /// Allows anonymous requests.
+        /// </summary>
+        /// <param name="searchCriteria"></param>
+        /// <returns></returns>
         [HttpPost("search")]
         public async Task<ArticleSearchResult> Search([FromBody] ArticleSearchCriteria searchCriteria)
         {

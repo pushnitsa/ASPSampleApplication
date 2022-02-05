@@ -8,6 +8,7 @@ using ASPSampleApplication.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 
 namespace ASPSampleApplication.Web
@@ -62,9 +63,13 @@ namespace ASPSampleApplication.Web
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sample API", Version = "v1" });
 
+                c.ExampleFilters();
+
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
+
+            services.AddSwaggerExamplesFromAssemblyOf<Startup>();
 
             services.AddRazorPages();
             services.AddAutoMapper(typeof(ArticleMappingProfile));
