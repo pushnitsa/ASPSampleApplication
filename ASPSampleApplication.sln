@@ -11,9 +11,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASPSampleApplication.Data",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASPSampleApplication.Core", "src\ASPSampleApplication.Core\ASPSampleApplication.Core.csproj", "{53D594A1-0D16-443D-BD5A-AFEE983035BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPSampleApplication.Tests", "tests\ASPSampleApplication.Tests\ASPSampleApplication.Tests.csproj", "{725D63AD-1BB3-4AE1-AC39-FCA4089A4314}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASPSampleApplication.Tests", "tests\ASPSampleApplication.Tests\ASPSampleApplication.Tests.csproj", "{725D63AD-1BB3-4AE1-AC39-FCA4089A4314}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{FB8ADBB2-2B1E-4B62-A030-09D5B3597A8A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{F8045F9D-C5DD-4BDD-97D4-67478D88069F}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+		entrypoint.sh = entrypoint.sh
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
