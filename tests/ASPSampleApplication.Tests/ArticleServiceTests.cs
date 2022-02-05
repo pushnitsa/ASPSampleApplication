@@ -27,9 +27,7 @@ namespace ASPSampleApplication.Tests
             repository.Setup(x => x.UnitOfWork).Returns(new Mock<IUnitOfWork>().Object);
 
             var articles = _fixture.CreateMany<ArticleEntity>(1).ToList();
-
             var articleId = Guid.NewGuid().ToString();
-
             articles.ForEach(x => x.Id = articleId);
 
             repository.Setup(x => x.Articles).Returns(articles.AsQueryable().BuildMock().Object);
