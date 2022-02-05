@@ -3,7 +3,6 @@ using ASPSampleApplication.Core.Services;
 using ASPSampleApplication.Data.Models;
 using ASPSampleApplication.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Immutable;
 using System.Linq.Dynamic.Core;
 
 namespace ASPSampleApplication.Data.Services
@@ -40,7 +39,7 @@ namespace ASPSampleApplication.Data.Services
                 .Select(x => x.Id)
                 .ToListAsync();
 
-            result.Results = (await _articleService.GetAsync(articleIds)).OrderBy(x => Array.IndexOf(articleIds.ToArray(), x.Id)).ToImmutableList();
+            result.Results = (await _articleService.GetAsync(articleIds)).OrderBy(x => Array.IndexOf(articleIds.ToArray(), x.Id)).ToList();
             result.TotalCount = await entryRespository.Articles.CountAsync();
 
             return result;

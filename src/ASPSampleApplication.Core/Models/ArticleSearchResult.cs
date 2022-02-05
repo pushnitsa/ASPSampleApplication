@@ -8,6 +8,6 @@
         }
 
         public int TotalCount { get; set; }
-        public IReadOnlyCollection<Article> Results { get; set; }
+        public List<Article> Results { get; set; }
     }
 }
