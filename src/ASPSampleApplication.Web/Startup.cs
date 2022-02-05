@@ -8,6 +8,7 @@ using ASPSampleApplication.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace ASPSampleApplication.Web
 {
@@ -27,7 +28,10 @@ namespace ASPSampleApplication.Web
                 options.UseSqlServer(Configuration.GetConnectionString("EntryConnectionString"));
             });
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+            }).AddXmlSerializerFormatters();
 
             services
                 .AddAuthentication(options => { options.DefaultChallengeScheme = SampleAuthOptions.DefaultSchemeName; })
@@ -57,6 +61,9 @@ namespace ASPSampleApplication.Web
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sample API", Version = "v1" });
+
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
             services.AddRazorPages();
