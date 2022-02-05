@@ -78,7 +78,6 @@ namespace ASPSampleApplication.Web
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<EntryDbContext>();
-                dbContext.Database.EnsureCreated();
                 dbContext.Database.Migrate();
             }
 
